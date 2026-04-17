@@ -1,310 +1,495 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>ShoPperZ | Amazon Style</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        html { scroll-behavior: smooth; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
 
         /* HEADER & NAV */
-        header { background-color: #131921; color: white; padding: 10px 20px; }
-        nav { display: flex; align-items: center; justify-content: space-between; height: 60px; }
-        
-        .logo { font-size: 24px; font-weight: bold; color: #f0c14b; text-decoration: none; }
-        
-        .search-container { flex-grow: 1; margin: 0 20px; display: flex; align-items: center; }
-        #user-search { width: 100%; padding: 10px; border: none; border-radius: 4px 0 0 4px; outline: none; }
-        .search-btn { background: #febd69; border: none; padding: 7px 15px; border-radius: 0 4px 4px 0; cursor: pointer; display: flex; align-items: center; height: 35px; }
-        
-        .nav-tools { display: flex; align-items: center; gap: 20px; }
-        .cart-icon-container { display: flex; align-items: center; cursor: pointer; position: relative; }
-        #cart-count { background: #f08804; color: black; border-radius: 50%; padding: 2px 6px; font-size: 12px; position: absolute; top: -10px; right: -10px; font-weight: bold; }
+        header {
+            background-color: #131921;
+            color: white;
+            padding: 10px 20px;
+        }
 
-        .sub-nav { background-color: #232f3e; color: white; padding: 10px 20px; display: flex; gap: 20px; font-size: 14px; }
-        .sub-nav span { cursor: pointer; }
-        .sub-nav span:hover { border: 1px solid white; padding: 2px; }
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #f0c14b;
+            text-decoration: none;
+        }
+
+        .search-container {
+            flex-grow: 1;
+            margin: 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        #user-search {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+
+        .search-btn {
+            background: #febd69;
+            border: none;
+            padding: 7px 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            height: 35px;
+        }
+
+        .nav-tools {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cart-icon-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+            text-decoration: underline;
+        }
+
+        #cart-count {
+            background: #f08804;
+            color: black;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-weight: bold;
+        }
+
+        .sub-nav {
+            background-color: #232f3e;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+        }
+
+        .sub-nav span {
+            cursor: pointer;
+        }
+
+        .sub-nav span:hover {
+            border: 1px solid white;
+            padding: 2px;
+        }
 
         /* CART SIDEBAR - FIXED POSITION */
-        #cart-sidebar { 
-            position: fixed; 
-            top: 0; 
-            right: -400px; /* Initially Hidden */
-            width: 350px; 
-            height: 100vh; 
-            background: white; 
-            box-shadow: -5px 0 15px rgba(0,0,0,0.5); 
-            z-index: 2000; 
-            transition: 0.4s ease; 
+        #cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            /* Initially Hidden */
+            width: 350px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            transition: 0.4s ease;
             padding: 20px;
             display: flex;
             flex-direction: column;
         }
 
         /* HERO SLIDER REDUCED */
-        .section1 { width: 100%; overflow: hidden; height: 400px; position: relative; background: #eee; }
-        .img-slider { display: flex; width: 500%; animation: slide 15s infinite; }
-        .img-slider img { width: 20%; height: 400px; object-fit: cover; }
+        .section1 {
+            width: 100%;
+            overflow: hidden;
+            height: 400px;
+            position: relative;
+            background: #eee;
+        }
+
+        .img-slider {
+            display: flex;
+            width: 500%;
+            animation: slide 15s infinite;
+        }
+
+        .img-slider img {
+            width: 20%;
+            height: 400px;
+            object-fit: cover;
+        }
 
         @keyframes slide {
-            0% { transform: translateX(0); }
-            20% { transform: translateX(-20%); }
-            40% { transform: translateX(-40%); }
-            60% { transform: translateX(-60%); }
-            80% { transform: translateX(-80%); }
-            100% { transform: translateX(0); }
+            0% {
+                transform: translateX(0);
+            }
+
+            20% {
+                transform: translateX(-20%);
+            }
+
+            40% {
+                transform: translateX(-40%);
+            }
+
+            60% {
+                transform: translateX(-60%);
+            }
+
+            80% {
+                transform: translateX(-80%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
         }
 
         /* PRODUCT GRID */
-        .container { display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; gap: 20px; }
-        .items { width: 220px; border: 1px solid #ddd; border-radius: 8px; background: white; padding: 10px; transition: 0.3s; }
-        .items:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .items .img img { width: 100%; height: 180px; object-fit: contain; }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .items {
+            width: 220px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            padding: 10px;
+            transition: 0.3s;
+        }
+
+        .items:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .items .img img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+        }
 
         /* FOOTER */
-        footer { background: #232f3e; color: white; padding: 40px 20px; text-align: center; margin-top: 50px; }
-        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1000px; margin: auto; text-align: left; }
+        footer {
+            background: #232f3e;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
 
-    .items {
-        width: 240px;
-        background: white;
-        padding: 15px;
-        border: 1px solid #e7e7e7;
-        border-radius: 4px;
-        transition: transform 0.2s, box-shadow 0.2s;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-    }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1000px;
+            margin: auto;
+            text-align: left;
+        }
 
-    .items:hover {
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        border-color: transparent;
-        transform: translateY(-2px); /* Added a subtle "lift" effect */
-    }
-    
-    .sub-nav span {
-        cursor: pointer;
-        padding: 5px 8px;
-        border: 1px solid transparent;
-        transition: 0.2s;
-    }
+        .items {
+            width: 240px;
+            background: white;
+            padding: 15px;
+            border: 1px solid #e7e7e7;
+            border-radius: 4px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .sub-nav span:hover {
-        border: 1px solid white;
-        border-radius: 2px;
-    }
+        .items:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-color: transparent;
+            transform: translateY(-2px);
+            /* Added a subtle "lift" effect */
+        }
 
-    /* TOAST NOTIFICATION STYLES */
-    #toast-notification {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background-color: #067D62; /* Success Green */
-        color: white;
-        padding: 12px 20px;
-        border-radius: 4px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 3000; /* Stays above everything */
-        display: none; /* Controlled by JS */
-        align-items: center;
-        gap: 10px;
-        animation: fadeIn 0.3s ease-in-out;
-    }
+        .sub-nav span {
+            cursor: pointer;
+            padding: 5px 8px;
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+        .sub-nav span:hover {
+            border: 1px solid white;
+            border-radius: 2px;
+        }
 
-    .items .name {
-        font-size: 16px;
-        color: #0F1111;
-        margin-bottom: 5px;
-        display: -webkit-box;
-        -webkit-line-clamp: 2; /* Limits text to 2 lines */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        height: 40px;
+        /* TOAST NOTIFICATION STYLES */
+        #toast-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #067D62;
+            /* Success Green */
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 3000;
+            /* Stays above everything */
+            display: none;
+            /* Controlled by JS */
+            align-items: center;
+            gap: 10px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .items .name {
+            font-size: 16px;
+            color: #0F1111;
+            margin-bottom: 5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            /* Limits text to 2 lines */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 40px;
         }
 
         .remove-btn {
-        background: none;
-        border: none;
-        color: #007185; /* Amazon blue link color */
-        font-size: 12px;
-        cursor: pointer;
-        text-decoration: underline;
-        margin-top: 5px;
-    }
-    .remove-btn:hover {
-        color: #c45500; /* Amazon orange hover */
-    }
+            background: none;
+            border: none;
+            color: #007185;
+            /* Amazon blue link color */
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 5px;
+        }
 
-    .buy-btn {
-        width: 100%;
-        background: #ffd814;
-        border: 1px solid #fcd200;
-        border-radius: 20px;
-        padding: 8px;
-        cursor: pointer;
-        margin-top: auto; /* Pushes button to bottom of the card */
-        font-size: 13px;
-        font-weight: 500;
-    }
+        .remove-btn:hover {
+            color: #c45500;
+            /* Amazon orange hover */
+        }
 
-    .buy-btn:hover {
-        background: #f7ca00;
-        border-color: #f2c200;
-    }
+        .buy-btn {
+            width: 100%;
+            background: #ffd814;
+            border: 1px solid #fcd200;
+            border-radius: 20px;
+            padding: 8px;
+            cursor: pointer;
+            margin-top: auto;
+            /* Pushes button to bottom of the card */
+            font-size: 13px;
+            font-weight: 500;
+        }
 
-    .slider-container {
-        width: 100%;
-        height: 400px;
-        position: relative;
-        overflow: hidden;
-    }
+        .buy-btn:hover {
+            background: #f7ca00;
+            border-color: #f2c200;
+        }
 
-    .slide {
-        width: 100%;
-        height: 400px; /* Match your slider-container height */
-        background-size: cover; /* Crops slightly to ensure NO white gaps */
-        background-position: center; /* Keeps the center focus */
-        background-repeat: no-repeat;
-        display: flex;
-        align-items: center;
-        padding-left: 10%;
-    }
+        .slider-container {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .product-grid {
-        display: grid;
-        /* This creates a fluid layout that fits 3-5 items based on screen width */
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 25px;
-        padding: 20px;
-        max-width: 1200px;
-        margin: 0 auto; /* Centers the grid */
-    }
+        .slide {
+            width: 100%;
+            height: 400px;
+            /* Match your slider-container height */
+            background-size: cover;
+            /* Crops slightly to ensure NO white gaps */
+            background-position: center;
+            /* Keeps the center focus */
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            padding-left: 10%;
+        }
 
-    .product-card {
-        border: 1px solid #e0e0e0;
-        border-radius: 10px;
-        padding: 15px;
-        background: #fff;
-        text-align: center;
-        transition: box-shadow 0.3s;
-    }
+        .product-grid {
+            display: grid;
+            /* This creates a fluid layout that fits 3-5 items based on screen width */
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            /* Centers the grid */
+        }
 
-    .product-card:hover {
-        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    }
+        .product-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            background: #fff;
+            text-align: center;
+            transition: box-shadow 0.3s;
+        }
 
-    .text-overlay {
-        background: rgba(0, 0, 0, 0.6); /* Dark semi-transparent box */
-        color: white;
-        padding: 30px;
-        border-radius: 8px;
-        max-width: 400px;
-    }
+        .product-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
 
-    .text-overlay h1 { margin: 0 0 10px; }
-    .text-overlay button {
-        background: #ff9900; /* Amazon-style orange */
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-</style>
+        .text-overlay {
+            background: rgba(0, 0, 0, 0.6);
+            /* Dark semi-transparent box */
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 400px;
+        }
+
+        .text-overlay h1 {
+            margin: 0 0 10px;
+        }
+
+        .text-overlay button {
+            background: #ff9900;
+            /* Amazon-style orange */
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 
 <body>
 
-<header>
+    <header>
 
-    <nav>
-        <a href="#" class="logo">ShoPperZ<span style="color:white; font-size:12px;">.in</span></a>
+        <nav>
+            <a href="#" class="logo">ShoPperZ<span style="color:white; font-size:12px;">.in</span></a>
 
-        <div class="search-container">
-            <input type="text" id="user-search" placeholder="Search ShoPperZ">
-            <button class="search-btn" onclick="searchProducts()">
-                <ion-icon name="search-outline"></ion-icon>
-            </button>
+            <div class="search-container">
+                <input type="text" id="user-search" placeholder="Search ShoPperZ">
+                <button class="search-btn" onclick="searchProducts()">
+                    <ion-icon name="search-outline"></ion-icon>
+                </button>
+            </div>
+
+            <div class="nav-tools">
+                <div id="welcome-text" style="font-size: 14px;" onclick="toggleAuthModal()"> Hello, Sign in</div>
+                <div class="cart-icon-container" id="open-cart-btn">
+                    <ion-icon name="cart-outline" style="font-size: 30px; background: none; color: white;"></ion-icon>
+                    <span id="cart-count">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="sub-nav"
+        style="background-color: #232f3e; color: white; padding: 0 20px; height: 39px; display: flex; align-items: center; gap: 15px; font-size: 14px;">
+        <span
+            style="display: flex; align-items: center; gap: 5px; cursor: pointer; font-weight: bold; border: 1px solid transparent; padding: 5px;"
+            onmouseover="this.style.border='1px solid white'" onmouseout="this.style.border='1px solid transparent'">
+            <ion-icon name="menu-outline" style="font-size: 20px;"></ion-icon> All
+        </span>
+        <span style="cursor: pointer;" onclick="filterByCategory('Electronics')">Today's Deals</span>
+        <span style="cursor: pointer;">Customer Service</span>
+        <span style="cursor: pointer;">Registry</span>
+        <span style="cursor: pointer;">Gift Cards</span>
+        <span style="cursor: pointer;" onclick="filterByCategory('Shoes')">Sell</span>
+    </div>
+
+    <div id="cart-sidebar">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="color: black;">Your Cart</h2>
+            <ion-icon name="close-outline" id="close-cart"
+                style="font-size: 30px; cursor: pointer; color: black; background: none;"></ion-icon>
         </div>
+        <hr style="margin: 15px 0;">
+        <div id="cart-items-list" style="flex-grow: 1; overflow-y: auto;"></div>
 
-        <div class="nav-tools">
-            <div id="welcome-text" style="font-size: 14px;">Hello, Sign in</div>
-            <div class="cart-icon-container" id="open-cart-btn">
-                <ion-icon name="cart-outline" style="font-size: 30px; background: none; color: white;"></ion-icon>
-                <span id="cart-count">0</span>
+        <div style="border-top: 2px solid #eee; padding-top: 20px;">
+            <h3 id="cart-total" style="color: black;">Total: $0.00</h3>
+            <button
+                style="width: 100%; background: #ffd814; color: black; border: 1px solid #fcd200; padding: 15px; margin-top: 10px; cursor: pointer; font-weight: bold; border-radius: 8px;">PROCEED
+                TO CHECKOUT</button>
+        </div>
+    </div>
+
+    <div class="slider-container">
+        <div class="slide"
+            style="background-image: url('https://images.pexels.com/photos/3394651/pexels-photo-3394651.jpeg');">
+            <div class="text-overlay">
+                <h1>Pro Audio Deals</h1>
+                <p>Up to 50% off on Noise Cancelling Headphones</p>
+                <button onclick="filterCategory('Electronics')">Shop Electronics</button>
             </div>
         </div>
-    </nav>
-</header>
-<div class="sub-nav" style="background-color: #232f3e; color: white; padding: 0 20px; height: 39px; display: flex; align-items: center; gap: 15px; font-size: 14px;">
-    <span style="display: flex; align-items: center; gap: 5px; cursor: pointer; font-weight: bold; border: 1px solid transparent; padding: 5px;" onmouseover="this.style.border='1px solid white'" onmouseout="this.style.border='1px solid transparent'">
-        <ion-icon name="menu-outline" style="font-size: 20px;"></ion-icon> All
-    </span>
-    <span style="cursor: pointer;" onclick="filterByCategory('Electronics')">Today's Deals</span>
-    <span style="cursor: pointer;">Customer Service</span>
-    <span style="cursor: pointer;">Registry</span>
-    <span style="cursor: pointer;">Gift Cards</span>
-    <span style="cursor: pointer;" onclick="filterByCategory('Shoes')">Sell</span>
-</div>
-
-<div id="cart-sidebar">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h2 style="color: black;">Your Cart</h2>
-        <ion-icon name="close-outline" id="close-cart" style="font-size: 30px; cursor: pointer; color: black; background: none;"></ion-icon>
-    </div>
-    <hr style="margin: 15px 0;">
-    <div id="cart-items-list" style="flex-grow: 1; overflow-y: auto;"></div>
-    
-    <div style="border-top: 2px solid #eee; padding-top: 20px;">
-        <h3 id="cart-total" style="color: black;">Total: $0.00</h3>
-        <button style="width: 100%; background: #ffd814; color: black; border: 1px solid #fcd200; padding: 15px; margin-top: 10px; cursor: pointer; font-weight: bold; border-radius: 8px;">PROCEED TO CHECKOUT</button>
-    </div>
-</div>
-
-<div class="slider-container">
-    <div class="slide" style="background-image: url('https://images.pexels.com/photos/3394651/pexels-photo-3394651.jpeg');">
-        <div class="text-overlay">
-            <h1>Pro Audio Deals</h1>
-            <p>Up to 50% off on Noise Cancelling Headphones</p>
-            <button onclick="filterCategory('Electronics')">Shop Electronics</button>
+        <div class="slide"
+            style="background-image: url('https://images.pexels.com/photos/1464625/pexels-photo-1464625.jpeg');">
+            <div class="text-overlay">
+                <h1>Spring Sneaker Event</h1>
+                <p>Step into style with our new leather collection</p>
+                <button onclick="filterCategory('Shoes')">Shop Shoes</button>
+            </div>
         </div>
     </div>
-    <div class="slide" style="background-image: url('https://images.pexels.com/photos/1464625/pexels-photo-1464625.jpeg');">
-        <div class="text-overlay">
-            <h1>Spring Sneaker Event</h1>
-            <p>Step into style with our new leather collection</p>
-            <button onclick="filterCategory('Shoes')">Shop Shoes</button>
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlides() {
+            slides.forEach(s => s.style.display = 'none');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].style.display = 'flex';
+            setTimeout(showSlides, 4000); // Change image every 4 seconds
+        }
+
+        showSlides();
+    </script>
+
+
+    <section class="section2">
+        <div class="container" id="product-list">
         </div>
-    </div>
-</div>
-<script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
+    </section>
 
-    function showSlides() {
-        slides.forEach(s => s.style.display = 'none');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].style.display = 'flex';
-        setTimeout(showSlides, 4000); // Change image every 4 seconds
-    }
-
-    showSlides();
-</script>
-
-
-<section class="section2">
-    <div class="container" id="product-list">
-        </div>
-</section>
-
-<div id="toast-notification" style="
+    <div id="toast-notification" style="
     position: fixed; 
     top: 20px; 
     right: 20px; 
@@ -318,107 +503,116 @@
     align-items: center;
     gap: 10px;
     font-weight: bold;">
-    <ion-icon name="checkmark-circle" style="font-size: 24px; background: none; color: white;"></ion-icon>
-    <span id="toast-msg">Added to Cart!</span>
-</div>
-
-<footer>
-    <div class="footer-grid">
-        <div><h4>Get to Know Us</h4><p>About Us</p><p>Careers</p></div>
-        <div><h4>Connect with Us</h4><p>Facebook</p><p>Twitter</p></div>
-        <div><h4>Make Money</h4><p>Sell on ShoPperZ</p><p>Affiliate</p></div>
-        <div><h4>Let Us Help You</h4><p>Your Account</p><p>Help Center</p></div>
+        <ion-icon name="checkmark-circle" style="font-size: 24px; background: none; color: white;"></ion-icon>
+        <span id="toast-msg">Added to Cart!</span>
     </div>
-    <div style="margin-top: 30px; border-top: 1px solid #3a4553; padding-top: 20px;">
-        Copyright © ShoPperZ 2026
-    </div>
-</footer>
 
-<script>
-    const cartSidebar = document.getElementById('cart-sidebar');
-    const openCartBtn = document.getElementById('open-cart-btn');
-    const closeCartBtn = document.getElementById('close-cart');
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <h4>Get to Know Us</h4>
+                <p>About Us</p>
+                <p>Careers</p>
+            </div>
+            <div>
+                <h4>Connect with Us</h4>
+                <p>Facebook</p>
+                <p>Twitter</p>
+            </div>
+            <div>
+                <h4>Make Money</h4>
+                <p>Sell on ShoPperZ</p>
+                <p>Affiliate</p>
+            </div>
+            <div>
+                <h4>Let Us Help You</h4>
+                <p>Your Account</p>
+                <p>Help Center</p>
+            </div>
+        </div>
+        <div style="margin-top: 30px; border-top: 1px solid #3a4553; padding-top: 20px;">
+            Copyright © ShoPperZ 2026
+        </div>
+    </footer>
 
-    // Sidebar Toggles
-    openCartBtn.onclick = () => { cartSidebar.style.right = '0'; showCartItems(); };
-    closeCartBtn.onclick = () => { cartSidebar.style.right = '-400px'; };
+    <script>
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const openCartBtn = document.getElementById('open-cart-btn');
+        const closeCartBtn = document.getElementById('close-cart');
 
-    // 1. Fetch and Render
-    async function loadProducts() {
-        try {
+        // Sidebar Toggles
+        openCartBtn.onclick = () => { cartSidebar.style.right = '0'; showCartItems(); };
+        closeCartBtn.onclick = () => { cartSidebar.style.right = '-400px'; };
+
+        // 1. Fetch and Render
+        async function loadProducts() {
+            try {
+                const res = await fetch('http://localhost:8080/api/products');
+                const data = await res.json();
+                renderProducts(data);
+            } catch (e) { console.error("API Offline"); }
+        }
+
+        function renderProducts(products) {
+            const container = document.getElementById('product-list');
+            container.innerHTML = "";
+            products.forEach(p => {
+                let stars = '★'.repeat(Math.floor(p.rating || 4)) + '☆'.repeat(5 - Math.floor(p.rating || 4));
+                container.innerHTML += `
+            <div class="items">
+                <div class="img"><img src="${p.imageUrl}"></div>
+                <div style="color:#565959; font-size:12px; margin-top:10px;">${p.category || 'General'}</div>
+                <div style="font-weight:bold; height:40px; overflow:hidden; margin:5px 0;">${p.name}</div>
+                <div style="color:#ffa41c;">${stars}</div>
+                <div style="font-size:18px; font-weight:bold; margin:10px 0;">$${p.price}</div>
+                <button onclick='addToCart(${JSON.stringify(p)})' style="width:100%; background:#ffd814; border:1px solid #fcd200; border-radius:20px; padding:7px; cursor:pointer;">Add to Cart</button>
+            </div>`;
+            });
+        }
+
+        // 2. Search & Filter
+        async function searchProducts() {
+            const query = document.getElementById('user-search').value.toLowerCase();
             const res = await fetch('http://localhost:8080/api/products');
             const data = await res.json();
-            renderProducts(data);
-        } catch (e) { console.error("API Offline"); }
-    }
-
-    function renderProducts(products) {
-        const container = document.getElementById('product-list');
-        container.innerHTML = ""; 
-        products.forEach(p => {
-            let stars = '★'.repeat(Math.floor(p.rating || 4)) + '☆'.repeat(5 - Math.floor(p.rating || 4));
-            container.innerHTML += `
-                <div class="items">
-                    <div class="img"><img src="${p.imageUrl}"></div>
-                    <div style="color:#565959; font-size:12px; margin-top:10px;">${p.category || 'General'}</div>
-                    <div style="font-weight:bold; height:40px; overflow:hidden; margin:5px 0;">${p.name}</div>
-                    <div style="color:#ffa41c;">${stars}</div>
-                    <div style="font-size:18px; font-weight:bold; margin:10px 0;">$${p.price}</div>
-                    <button onclick='addToCart(${JSON.stringify(p)})' style="width:100%; background:#ffd814; border:1px solid #fcd200; border-radius:20px; padding:7px; cursor:pointer;">Add to Cart</button>
-                </div>`;
-        });
-    }
-
-    // 2. Search & Filter
-    async function searchProducts() {
-        const query = document.getElementById('user-search').value.toLowerCase();
-        const res = await fetch('http://localhost:8080/api/products');
-        const data = await res.json();
-        const filtered = data.filter(p => p.name.toLowerCase().includes(query));
-        renderProducts(filtered);
-    }
-
-    async function filterByCategory(cat) {
-        const res = await fetch(`http://localhost:8080/api/products/category/${cat}`);
-        const data = await res.json();
-        renderProducts(data);
-    }
-
-    // 3. Cart Logic
-    async function addToCart(product) {
-    try {
-        const response = await fetch('http://localhost:8080/api/cart/add', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(product)
-        });
-
-        if (response.ok) {
-            // 1. Show the success popup
-            showToast(product.name);
-            
-            // 2. Update the bubble count immediately
-            updateCartCount();
-            
-            // 3. Optional: Automatically open the sidebar (remove this line if you only want the toast)
-            // cartSidebar.style.right = '0'; 
-            // showCartItems();
+            const filtered = data.filter(p => p.name.toLowerCase().includes(query));
+            renderProducts(filtered);
         }
-    } catch (error) {
-        console.error("Add to cart failed:", error);
-    }
-}
 
-    async function showCartItems() {
-    const res = await fetch('http://localhost:8080/api/cart/items');
-    const items = await res.json();
-    const list = document.getElementById('cart-items-list');
-    list.innerHTML = "";
-    let total = 0;
+        async function filterByCategory(cat) {
+            const res = await fetch(`http://localhost:8080/api/products/category/${cat}`);
+            const data = await res.json();
+            renderProducts(data);
+        }
 
-    items.forEach((item, index) => {
-        total += item.price;
-        list.innerHTML += `
+        // 3. Cart Logic
+        async function addToCart(product) {
+            try {
+                const response = await fetch('http://localhost:8080/api/cart/add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(product)
+                });
+
+                if (response.ok) {
+                    showToast(`${product.name} added to cart!`);
+                    updateCartCount();
+                }
+            } catch (error) {
+                console.error("Add to cart failed:", error);
+            }
+        }
+
+        async function showCartItems() {
+            const res = await fetch('http://localhost:8080/api/cart/items');
+            const items = await res.json();
+            const list = document.getElementById('cart-items-list');
+            list.innerHTML = "";
+            let total = 0;
+
+            items.forEach((item, index) => {
+                total += item.price;
+                list.innerHTML += `
             <div style="display:flex; align-items:center; margin-bottom:15px; color:black; border-bottom: 1px solid #eee; padding-bottom: 10px;">
                 <img src="${item.imageUrl}" style="width:50px; height:50px; margin-right:10px; object-fit:contain;">
                 <div style="flex-grow: 1;">
@@ -427,49 +621,134 @@
                     <button class="remove-btn" onclick="removeFromCart(${index})">Delete</button>
                 </div>
             </div>`;
-    });
-    document.getElementById('cart-total').innerText = `Total: $${total.toFixed(2)}`;
-}
-
-    async function updateCartCount() {
-        const res = await fetch('http://localhost:8080/api/cart/count');
-        document.getElementById('cart-count').innerText = await res.text();
-    }
-
-    // Initial Load
-    window.onload = () => { loadProducts(); updateCartCount(); };
-
-    async function removeFromCart(index) {
-        console.log("Attempting to remove item at index: ", index);
-    try {
-        await fetch(`http://localhost:8080/api/cart/remove/${index}`, {
-            method: 'DELETE'
-        });
-        if (response.ok){
-            console.log("Server confirmed deletion. Updating UI...");
-        // Refresh the cart display and the count bubble
-        await showCartItems();
-        await updateCartCount();
-        }else{
-            console.error("Server refused to delete the Item. Status: ", response.status);
+            });
+            document.getElementById('cart-total').innerText = `Total: $${total.toFixed(2)}`;
         }
-    } catch (e) {
-        console.error("Could not remove item", e);
-    }
-}
-function showToast(productName) {
-    const toast = document.getElementById('toast-notification');
-    const msg = document.getElementById('toast-msg');
-    
-    msg.innerText = `${productName} added to cart!`;
-    toast.style.display = 'flex'; // Show it
 
-    // Hide it automatically after 3 seconds
-    setTimeout(() => {
-        toast.style.display = 'none';
-    }, 3000);
-}
+        async function updateCartCount() {
+            const res = await fetch('http://localhost:8080/api/cart/count');
+            document.getElementById('cart-count').innerText = await res.text();
+        }
 
-</script>
+        window.onload = () => { loadProducts(); updateCartCount(); };
+
+        async function removeFromCart(index) {
+            console.log("Attempting to remove item at index: ", index);
+            try {
+                await fetch(`http://localhost:8080/api/cart/remove/${index}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    console.log("Server confirmed deletion. Updating UI...");
+                    // Refresh the cart display and the count bubble
+                    await showCartItems();
+                    await updateCartCount();
+                } else {
+                    console.error("Server refused to delete the Item. Status: ", response.status);
+                }
+            } catch (e) {
+                console.error("Could not remove item", e);
+            }
+        }
+
+        async function handleLogin(email, password) {
+            const response = await fetch('http://localhost:8080/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            const result = await response.text();
+            if (result === "Login successful!") {
+                document.getElementById('welcome-text').innerText = `Hello, ${email}`;
+            } else {
+                alert(result);
+            }
+        }
+
+        // Make sure the parameter name matches the one used inside the function
+        function showToast(messageText) {
+            const toast = document.getElementById('toast-notification');
+            const msg = document.getElementById('toast-msg');
+
+            msg.innerText = messageText;
+            toast.style.display = 'flex';
+
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        let isSignUp = false;
+
+        function toggleAuthModal() {
+            const modal = document.getElementById('auth-modal');
+            modal.style.display = (modal.style.display === 'none' || modal.style.display === '') ? 'flex' : 'none';
+        }
+
+        function switchAuthMode() {
+            isSignUp = !isSignUp;
+            document.getElementById('modal-title').innerText = isSignUp ? "Create Account" : "Sign In";
+            document.getElementById('auth-submit-btn').innerText = isSignUp ? "Create your ShoPperZ account" : "Sign In";
+            document.getElementById('auth-toggle-msg').innerText = isSignUp ? "Already have an account?" : "New customer?";
+            document.getElementById('auth-toggle-link').innerText = isSignUp ? "Sign in" : "Start here.";
+        }
+
+        async function submitAuth() {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            const endpoint = isSignUp ? 'signup' : 'login';
+
+            try {
+                const response = await fetch(`http://localhost:8080/api/auth/${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const result = await response.text();
+
+                // We check 'response.ok' here now that it is defined
+                if (response.ok && (result === "Login successful!" || result === "User registered successfully!")) {
+                    document.getElementById('welcome-text').innerText = `Hello, ${email.split('@')[0]}`;
+                    toggleAuthModal();
+                    showToast(result);
+                } else {
+                    alert(result || "Authentication failed");
+                }
+            } catch (error) {
+                console.error("Auth failed:", error);
+                alert("Cannot connect to server. Is the backend running?");
+            }
+        }
+
+    </script>
+
+    <div id="auth-modal"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:4000; align-items:center; justify-content:center;">
+        <div style="background:white; padding:30px; border-radius:8px; width:350px; position:relative;">
+            <ion-icon name="close-outline" onclick="toggleAuthModal()"
+                style="position:absolute; top:10px; right:10px; font-size:25px; cursor:pointer; color:black;"></ion-icon>
+
+            <h2 id="modal-title" style="color:black; margin-bottom:20px;">Sign In</h2>
+
+            <input type="text" id="auth-email" placeholder="Email"
+                style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:4px;">
+            <input type="password" id="auth-password" placeholder="Password"
+                style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:4px;">
+
+            <button id="auth-submit-btn" onclick="submitAuth()"
+                style="width:100%; background:#ffd814; border:1px solid #fcd200; padding:10px; font-weight:bold; cursor:pointer; border-radius:4px;">
+                Sign In
+            </button>
+
+            <p style="color:gray; font-size:12px; margin-top:15px; text-align:center;">
+                <span id="auth-toggle-msg">New customer?</span>
+                <a href="javascript:void(0)" onclick="switchAuthMode()" id="auth-toggle-link"
+                    style="color:#007185;">Start here.</a>
+            </p>
+        </div>
+    </div>
+
 </body>
+
 </html>
