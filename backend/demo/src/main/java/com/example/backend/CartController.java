@@ -28,9 +28,18 @@ public class CartController {
 
     @DeleteMapping("/remove/{index}")
     public void removeItem(@PathVariable int index) {
-    if (index >= 0 && index < cartItems.size()) {
-        cartItems.remove(index);
-        System.out.println("Removed item at index: " + index);
+        if (index >= 0 && index < cartItems.size()) {
+            cartItems.remove(index);
+            System.out.println("Removed item at index: " + index);
+        }
     }
-}
+
+    @PostMapping("/checkout")
+    public String checkout() {
+        if (cartItems.isEmpty()) {
+            return "Cart is empty";
+        }
+        cartItems.clear();
+        return "Order placed successfully!";
+    }
 }

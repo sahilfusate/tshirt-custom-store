@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>ShoPperZ | Amazon Style</title>
+    <title>ShoPperZ | Custom T-shirt Store</title>
     <style>
         * {
             margin: 0;
@@ -422,16 +422,17 @@
     </header>
     <div class="sub-nav"
         style="background-color: #232f3e; color: white; padding: 0 20px; height: 39px; display: flex; align-items: center; gap: 15px; font-size: 14px;">
-        <span
+        <span onclick="showMainStore()"
             style="display: flex; align-items: center; gap: 5px; cursor: pointer; font-weight: bold; border: 1px solid transparent; padding: 5px;"
             onmouseover="this.style.border='1px solid white'" onmouseout="this.style.border='1px solid transparent'">
             <ion-icon name="menu-outline" style="font-size: 20px;"></ion-icon> All
         </span>
-        <span style="cursor: pointer;" onclick="filterByCategory('Electronics')">Today's Deals</span>
-        <span style="cursor: pointer;">Customer Service</span>
-        <span style="cursor: pointer;">Registry</span>
-        <span style="cursor: pointer;">Gift Cards</span>
-        <span style="cursor: pointer;" onclick="filterByCategory('Shoes')">Sell</span>
+        <span style="cursor: pointer; font-weight: bold;" onclick="showSection('orders-section'); renderOrders()">Your Orders</span>
+        <span style="cursor: pointer;" onclick="showMainStore(); filterByCategory('Electronics')">Today's Deals</span>
+        <span style="cursor: pointer;" onclick="showSection('customer-service-section')">Customer Service</span>
+        <span style="cursor: pointer;" onclick="showSection('registry-section')">Registry</span>
+        <span style="cursor: pointer;" onclick="showSection('gift-cards-section')">Gift Cards</span>
+        <span style="cursor: pointer;" onclick="showSection('sell-section')">Sell</span>
     </div>
 
     <div id="cart-sidebar">
@@ -444,8 +445,8 @@
         <div id="cart-items-list" style="flex-grow: 1; overflow-y: auto;"></div>
 
         <div style="border-top: 2px solid #eee; padding-top: 20px;">
-            <h3 id="cart-total" style="color: black;">Total: $0.00</h3>
-            <button
+            <h3 id="cart-total" style="color: black;">Total: ₹0.00</h3>
+            <button onclick="goToCheckout()"
                 style="width: 100%; background: #ffd814; color: black; border: 1px solid #fcd200; padding: 15px; margin-top: 10px; cursor: pointer; font-weight: bold; border-radius: 8px;">PROCEED
                 TO CHECKOUT</button>
         </div>
@@ -487,6 +488,158 @@
     <section class="section2">
         <div class="container" id="product-list">
         </div>
+    </section>
+
+    <!-- CHECKOUT SECTION -->
+    <section id="checkout-section"
+        style="display: none; max-width: 1200px; margin: 40px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <h1 style="border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 20px; color: #0F1111;">Checkout
+        </h1>
+        <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+
+            <!-- Left Column: Address & Payment -->
+            <div style="flex: 2; min-width: 300px;">
+                <div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                    <h2 style="margin-bottom: 15px; font-size: 18px; color: #0F1111;">1. Shipping Address</h2>
+                    <input type="text" placeholder="Full Name"
+                        style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:4px;">
+                    <input type="text" placeholder="Address Line 1"
+                        style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:4px;">
+                    <input type="text" placeholder="City"
+                        style="width:48%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:4px; display:inline-block;">
+                    <input type="text" placeholder="Zip Code"
+                        style="width:48%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:4px; display:inline-block; float:right;">
+                </div>
+
+                <div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+                    <h2 style="margin-bottom: 15px; font-size: 18px; color: #0F1111;">2. Payment Method</h2>
+                    <div style="margin-bottom: 10px;">
+                        <input type="radio" id="pm-card" name="payment-method" value="Card" checked>
+                        <label for="pm-card" style="font-weight: bold;">Credit or Debit Card</label>
+                        <div style="margin-top: 10px; padding-left: 25px;">
+                            <input type="text" placeholder="Card Number"
+                                style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:4px;">
+                            <input type="text" placeholder="MM/YY"
+                                style="width:48%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:4px; display:inline-block;">
+                            <input type="text" placeholder="CVC"
+                                style="width:48%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:4px; display:inline-block; float:right;">
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 10px; padding-top: 10px; border-top: 1px solid #eee;">
+                        <input type="radio" id="pm-paypal" name="payment-method" value="PayPal">
+                        <label for="pm-paypal">PayPal</label>
+                    </div>
+                    <div style="margin-bottom: 10px; padding-top: 10px; border-top: 1px solid #eee;">
+                        <input type="radio" id="pm-cod" name="payment-method" value="COD">
+                        <label for="pm-cod">Cash on Delivery</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Order Summary -->
+            <div style="flex: 1; min-width: 300px;">
+                <div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #f8f8f8;">
+                    <h2 style="margin-bottom: 15px; font-size: 18px; color: #0F1111;">Order Summary</h2>
+                    <div id="checkout-items-list"
+                        style="max-height: 300px; overflow-y: auto; margin-bottom: 15px; padding-right: 5px;"></div>
+                    <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ddd;">
+                    <div
+                        style="display: flex; justify-content: space-between; font-weight: bold; font-size: 18px; color: #B12704; margin-bottom: 20px;">
+                        <span>Order Total:</span>
+                        <span id="checkout-total">₹0.00</span>
+                    </div>
+                    <button onclick="placeOrder()"
+                        style="width: 100%; background: #ffd814; color: black; border: 1px solid #fcd200; padding: 12px; cursor: pointer; font-weight: bold; border-radius: 8px; font-size: 16px;">Place
+                        Your Order</button>
+    </section>
+
+    <!-- CUSTOMER SERVICE SECTION -->
+    <section id="customer-service-section" style="display: none; max-width: 1200px; margin: 40px auto; padding: 20px;">
+        <h1 style="color: #0F1111; margin-bottom: 20px;">Welcome to Customer Service</h1>
+        <p style="font-size: 16px; margin-bottom: 20px;">What would you like help with today? You can quickly take care of most things here, or connect with us when needed.</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
+            <div style="border: 1px solid #ddd; border-radius: 8px; padding: 20px; cursor: pointer; transition: 0.3s;" onmouseover="this.style.boxShadow='0 4px 10px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+                <h3>A delivery, order or return</h3>
+                <p style="color: #565959; font-size: 14px; margin-top: 10px;">Track packages, edit or cancel orders.</p>
+            </div>
+            <div style="border: 1px solid #ddd; border-radius: 8px; padding: 20px; cursor: pointer; transition: 0.3s;" onmouseover="this.style.boxShadow='0 4px 10px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+                <h3>Payment, charges or gift cards</h3>
+                <p style="color: #565959; font-size: 14px; margin-top: 10px;">Manage payment methods or view balances.</p>
+            </div>
+            <div style="border: 1px solid #ddd; border-radius: 8px; padding: 20px; cursor: pointer; transition: 0.3s;" onmouseover="this.style.boxShadow='0 4px 10px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+                <h3>Account settings</h3>
+                <p style="color: #565959; font-size: 14px; margin-top: 10px;">Change your password or address.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- REGISTRY SECTION -->
+    <section id="registry-section" style="display: none; max-width: 1200px; margin: 40px auto; padding: 20px; text-align: center;">
+        <h1 style="color: #0F1111; margin-bottom: 10px;">ShoPperZ Registry & Gifting</h1>
+        <p style="font-size: 16px; margin-bottom: 30px; color: #565959;">Celebrate life's big moments with the perfect gifts.</p>
+        <div style="display: flex; justify-content: center; gap: 40px; margin-bottom: 40px; flex-wrap: wrap;">
+            <div style="width: 300px; padding: 30px; border: 1px solid #ddd; border-radius: 8px; background: #f8f8f8;">
+                <h2>Find a Registry</h2>
+                <input type="text" placeholder="Registrant name" style="width: 100%; padding: 10px; margin: 20px 0; border: 1px solid #ccc; border-radius: 4px;">
+                <button style="width: 100%; background: #ffd814; border: 1px solid #fcd200; padding: 10px; cursor: pointer; border-radius: 20px; font-weight: bold;">Search</button>
+            </div>
+            <div style="width: 300px; padding: 30px; border: 1px solid #ddd; border-radius: 8px; background: #f8f8f8;">
+                <h2>Create a Registry</h2>
+                <p style="margin: 20px 0; font-size: 14px;">Wedding, Baby, or Custom Registry</p>
+                <button onclick="if(!currentUserEmail){toggleAuthModal()}else{showToast('Registry Created!')}" style="width: 100%; background: #ffd814; border: 1px solid #fcd200; padding: 10px; cursor: pointer; border-radius: 20px; font-weight: bold;">Get Started</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- GIFT CARDS SECTION -->
+    <section id="gift-cards-section" style="display: none; max-width: 1200px; margin: 40px auto; padding: 20px;">
+        <div style="background: linear-gradient(135deg, #232f3e, #131921); color: white; padding: 50px; border-radius: 8px; text-align: center; margin-bottom: 40px;">
+            <h1 style="font-size: 36px; margin-bottom: 10px; color: #f0c14b;">ShoPperZ Gift Cards</h1>
+            <p style="font-size: 18px;">The perfect gift for anyone, anytime.</p>
+        </div>
+        <div style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap;">
+            <div style="width: 250px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <div style="height: 150px; background: #ff9900; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: bold;">Birthday</div>
+                <div style="padding: 15px; text-align: center;">
+                    <button onclick="showToast('Added Birthday Gift Card to cart!')" style="width: 100%; background: #ffd814; border: 1px solid #fcd200; padding: 8px; cursor: pointer; border-radius: 20px;">Buy Now</button>
+                </div>
+            </div>
+            <div style="width: 250px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <div style="height: 150px; background: #007185; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: bold;">Thank You</div>
+                <div style="padding: 15px; text-align: center;">
+                    <button onclick="showToast('Added Thank You Gift Card to cart!')" style="width: 100%; background: #ffd814; border: 1px solid #fcd200; padding: 8px; cursor: pointer; border-radius: 20px;">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SELL SECTION -->
+    <section id="sell-section" style="display: none; max-width: 1200px; margin: 40px auto; padding: 20px; text-align: center;">
+        <h1 style="font-size: 32px; color: #0F1111; margin-bottom: 20px;">Become a ShoPperZ Seller</h1>
+        <p style="font-size: 18px; color: #565959; margin-bottom: 40px;">Reach hundreds of millions of customers, build your brand, and grow your business.</p>
+        
+        <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 40px; flex-wrap: wrap;">
+            <div style="max-width: 300px; text-align: left;">
+                <h3 style="color: #007185; margin-bottom: 10px;">Reach Millions</h3>
+                <p style="font-size: 14px; color: #565959;">Tap into ShoPperZ's massive customer base instantly.</p>
+            </div>
+            <div style="max-width: 300px; text-align: left;">
+                <h3 style="color: #007185; margin-bottom: 10px;">Secure Payments</h3>
+                <p style="font-size: 14px; color: #565959;">We handle the transactions so you don't have to worry.</p>
+            </div>
+            <div style="max-width: 300px; text-align: left;">
+                <h3 style="color: #007185; margin-bottom: 10px;">Easy Shipping</h3>
+                <p style="font-size: 14px; color: #565959;">Use our fulfillment network to deliver products fast.</p>
+            </div>
+        </div>
+        
+        <button onclick="if(!currentUserEmail){toggleAuthModal()}else{showToast('Seller account registration started!')}" style="background: #ffa41c; color: #0F1111; border: 1px solid #ff8f00; padding: 15px 40px; font-size: 18px; font-weight: bold; border-radius: 4px; cursor: pointer;">Sign Up to Sell</button>
+    </section>
+
+    <!-- ORDERS SECTION -->
+    <section id="orders-section" style="display: none; max-width: 1200px; margin: 40px auto; padding: 20px;">
+        <h1 style="color: #0F1111; margin-bottom: 20px;">Your Orders</h1>
+        <div id="orders-list"></div>
     </section>
 
     <div id="toast-notification" style="
@@ -536,9 +689,37 @@
     </footer>
 
     <script>
+        let currentUserEmail = null; // Track login state
+        let orderHistory = []; // Track past orders in-memory
         const cartSidebar = document.getElementById('cart-sidebar');
         const openCartBtn = document.getElementById('open-cart-btn');
         const closeCartBtn = document.getElementById('close-cart');
+
+        // Page Routing Logic
+        function hideAllSections() {
+            document.querySelector('.slider-container').style.display = 'none';
+            document.querySelector('.section2').style.display = 'none';
+            document.getElementById('checkout-section').style.display = 'none';
+            document.getElementById('customer-service-section').style.display = 'none';
+            document.getElementById('registry-section').style.display = 'none';
+            document.getElementById('gift-cards-section').style.display = 'none';
+            document.getElementById('sell-section').style.display = 'none';
+            document.getElementById('orders-section').style.display = 'none';
+        }
+
+        function showSection(sectionId) {
+            hideAllSections();
+            document.getElementById(sectionId).style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function showMainStore() {
+            hideAllSections();
+            document.querySelector('.slider-container').style.display = 'block';
+            document.querySelector('.section2').style.display = 'block';
+            loadProducts();
+            window.scrollTo(0, 0);
+        }
 
         // Sidebar Toggles
         openCartBtn.onclick = () => { cartSidebar.style.right = '0'; showCartItems(); };
@@ -564,7 +745,7 @@
                 <div style="color:#565959; font-size:12px; margin-top:10px;">${p.category || 'General'}</div>
                 <div style="font-weight:bold; height:40px; overflow:hidden; margin:5px 0;">${p.name}</div>
                 <div style="color:#ffa41c;">${stars}</div>
-                <div style="font-size:18px; font-weight:bold; margin:10px 0;">$${p.price}</div>
+                <div style="font-size:18px; font-weight:bold; margin:10px 0;">₹${p.price}</div>
                 <button onclick='addToCart(${JSON.stringify(p)})' style="width:100%; background:#ffd814; border:1px solid #fcd200; border-radius:20px; padding:7px; cursor:pointer;">Add to Cart</button>
             </div>`;
             });
@@ -617,12 +798,12 @@
                 <img src="${item.imageUrl}" style="width:50px; height:50px; margin-right:10px; object-fit:contain;">
                 <div style="flex-grow: 1;">
                     <div style="font-size:14px; font-weight:bold;">${item.name}</div>
-                    <div style="font-size:13px;">$${item.price}</div>
+                    <div style="font-size:13px;">₹${item.price}</div>
                     <button class="remove-btn" onclick="removeFromCart(${index})">Delete</button>
                 </div>
             </div>`;
             });
-            document.getElementById('cart-total').innerText = `Total: $${total.toFixed(2)}`;
+            document.getElementById('cart-total').innerText = `Total: ₹${total.toFixed(2)}`;
         }
 
         async function updateCartCount() {
@@ -665,7 +846,6 @@
             }
         }
 
-        // Make sure the parameter name matches the one used inside the function
         function showToast(messageText) {
             const toast = document.getElementById('toast-notification');
             const msg = document.getElementById('toast-msg');
@@ -678,37 +858,217 @@
             }, 3000);
         }
 
+        // Checkout Logic
+        async function goToCheckout() {
+            if (!currentUserEmail) {
+                cartSidebar.style.right = '-400px';
+                toggleAuthModal();
+                alert("Please log in to place an order.");
+                return;
+            }
+
+            // Fetch latest cart items
+            const res = await fetch('http://localhost:8080/api/cart/items');
+            const items = await res.json();
+
+            if (items.length === 0) {
+                showToast("Your cart is empty!");
+                return;
+            }
+
+            // Close sidebar
+            cartSidebar.style.right = '-400px';
+
+            showSection('checkout-section');
+
+            // Populate checkout summary
+            const list = document.getElementById('checkout-items-list');
+            list.innerHTML = "";
+            let total = 0;
+
+            items.forEach((item) => {
+                total += item.price;
+                list.innerHTML += `
+                <div style="display:flex; justify-content: space-between; margin-bottom:10px; font-size: 14px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                    <div style="flex: 1; padding-right: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.name}</div>
+                    <div style="font-weight: bold;">₹${item.price}</div>
+                </div>`;
+            });
+            document.getElementById('checkout-total').innerText = `₹${total.toFixed(2)}`;
+        }
+
+        function cancelCheckout() {
+            showMainStore();
+        }
+
+        function logoutUser() {
+            currentUserEmail = null;
+            document.getElementById('welcome-text').innerText = "Hello, Sign in";
+        }
+
+        async function placeOrder() {
+            try {
+                // Fetch cart items to save them to order history before clearing
+                const itemsRes = await fetch('http://localhost:8080/api/cart/items');
+                const items = await itemsRes.json();
+                
+                if (items.length > 0) {
+                    let total = 0;
+                    items.forEach(i => total += i.price);
+                    orderHistory.unshift({
+                        id: 'ORD-' + Math.floor(100000 + Math.random() * 900000),
+                        date: new Date().toLocaleDateString(),
+                        total: total.toFixed(2),
+                        status: 'Processing Delivery',
+                        items: items
+                    });
+                }
+
+                const response = await fetch('http://localhost:8080/api/cart/checkout', {
+                    method: 'POST'
+                });
+                const result = await response.text();
+
+                showToast(result);
+                updateCartCount();
+                
+                // Show order history after placing order
+                showSection('orders-section');
+                renderOrders();
+            } catch (error) {
+                console.error("Checkout failed:", error);
+                alert("Failed to place order. Is the backend running?");
+            }
+        }
+
+        function renderOrders() {
+            if (!currentUserEmail) {
+                toggleAuthModal();
+                alert("Please log in to view your orders.");
+                showMainStore();
+                return;
+            }
+            const container = document.getElementById('orders-list');
+            if (orderHistory.length === 0) {
+                container.innerHTML = "<p>You have no recent orders.</p>";
+                return;
+            }
+            container.innerHTML = "";
+            orderHistory.forEach(order => {
+                let itemsHtml = order.items.map(item => `
+                    <div style="display: flex; gap: 15px; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
+                        <img src="${item.imageUrl}" style="width: 60px; height: 60px; object-fit: contain;">
+                        <div>
+                            <div style="font-weight: bold; color: #007185;">${item.name}</div>
+                            <div style="color: #B12704; font-weight: bold;">₹${item.price}</div>
+                        </div>
+                    </div>
+                `).join('');
+
+                container.innerHTML += `
+                <div style="border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px; overflow: hidden;">
+                    <div style="background: #f0f2f2; padding: 15px; display: flex; justify-content: space-between; border-bottom: 1px solid #ddd; font-size: 14px;">
+                        <div style="display: flex; gap: 30px;">
+                            <div>
+                                <div style="color: #565959;">ORDER PLACED</div>
+                                <div>${order.date}</div>
+                            </div>
+                            <div>
+                                <div style="color: #565959;">TOTAL</div>
+                                <div>₹${order.total}</div>
+                            </div>
+                            <div>
+                                <div style="color: #565959;">DELIVERY STATUS</div>
+                                <div style="color: #067D62; font-weight: bold;">${order.status}</div>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: #565959;">ORDER # ${order.id}</div>
+                        </div>
+                    </div>
+                    <div style="padding: 20px;">
+                        <h3 style="margin-bottom: 15px; color: #0F1111;">Delivery Details</h3>
+                        <p style="font-size: 14px; margin-bottom: 20px;">Standard Shipping - Arriving in 3-5 business days</p>
+                        ${itemsHtml}
+                    </div>
+                </div>`;
+            });
+        }
+
         let isSignUp = false;
 
         function toggleAuthModal() {
             const modal = document.getElementById('auth-modal');
             modal.style.display = (modal.style.display === 'none' || modal.style.display === '') ? 'flex' : 'none';
+
+            // Reset modal state
+            document.getElementById('auth-step-2').style.display = 'none';
+            document.getElementById('auth-continue-btn').style.display = 'block';
+            document.getElementById('auth-email').disabled = false;
+            document.getElementById('auth-otp').value = '';
+            document.getElementById('auth-password').value = '';
         }
 
         function switchAuthMode() {
             isSignUp = !isSignUp;
             document.getElementById('modal-title').innerText = isSignUp ? "Create Account" : "Sign In";
-            document.getElementById('auth-submit-btn').innerText = isSignUp ? "Create your ShoPperZ account" : "Sign In";
+            document.getElementById('auth-submit-btn').innerText = isSignUp ? "Verify and Create Account" : "Verify and Sign In";
             document.getElementById('auth-toggle-msg').innerText = isSignUp ? "Already have an account?" : "New customer?";
             document.getElementById('auth-toggle-link').innerText = isSignUp ? "Sign in" : "Start here.";
+        }
+
+        async function requestOtp() {
+            const email = document.getElementById('auth-email').value;
+            if (!email) {
+                alert("Please enter your email first.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:8080/api/auth/request-otp`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                const result = await response.text();
+                if (response.ok) {
+                    showToast(result); // Usually "OTP sent successfully!"
+                    // Proceed to step 2
+                    document.getElementById('auth-step-2').style.display = 'block';
+                    document.getElementById('auth-continue-btn').style.display = 'none';
+                    document.getElementById('auth-email').disabled = true; // Lock email
+                } else {
+                    alert(result);
+                }
+            } catch (error) {
+                console.error("OTP request failed:", error);
+                alert("Cannot connect to server.");
+            }
         }
 
         async function submitAuth() {
             const email = document.getElementById('auth-email').value;
             const password = document.getElementById('auth-password').value;
+            const otp = document.getElementById('auth-otp').value;
             const endpoint = isSignUp ? 'signup' : 'login';
+
+            if (!otp || !password) {
+                alert("Please enter both Verification Code and Password.");
+                return;
+            }
 
             try {
                 const response = await fetch(`http://localhost:8080/api/auth/${endpoint}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
+                    body: JSON.stringify({ email, password, otp })
                 });
 
                 const result = await response.text();
 
-                // We check 'response.ok' here now that it is defined
                 if (response.ok && (result === "Login successful!" || result === "User registered successfully!")) {
+                    currentUserEmail = email; // Set global state
                     document.getElementById('welcome-text').innerText = `Hello, ${email.split('@')[0]}`;
                     toggleAuthModal();
                     showToast(result);
@@ -733,13 +1093,25 @@
 
             <input type="text" id="auth-email" placeholder="Email"
                 style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:4px;">
-            <input type="password" id="auth-password" placeholder="Password"
-                style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:4px;">
 
-            <button id="auth-submit-btn" onclick="submitAuth()"
-                style="width:100%; background:#ffd814; border:1px solid #fcd200; padding:10px; font-weight:bold; cursor:pointer; border-radius:4px;">
-                Sign In
+            <button id="auth-continue-btn" onclick="requestOtp()"
+                style="width:100%; background:#ffd814; border:1px solid #fcd200; padding:10px; font-weight:bold; cursor:pointer; border-radius:4px; margin-bottom:15px;">
+                Continue
             </button>
+
+            <div id="auth-step-2" style="display: none;">
+                <p style="font-size: 12px; color: #007185; margin-bottom: 10px;">A verification code has been sent.
+                    Check your backend console.</p>
+                <input type="text" id="auth-otp" placeholder="Enter Verification Code"
+                    style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:4px;">
+                <input type="password" id="auth-password" placeholder="Password"
+                    style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:4px;">
+
+                <button id="auth-submit-btn" onclick="submitAuth()"
+                    style="width:100%; background:#ffd814; border:1px solid #fcd200; padding:10px; font-weight:bold; cursor:pointer; border-radius:4px;">
+                    Verify and Sign In
+                </button>
+            </div>
 
             <p style="color:gray; font-size:12px; margin-top:15px; text-align:center;">
                 <span id="auth-toggle-msg">New customer?</span>
